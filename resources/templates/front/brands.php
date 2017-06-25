@@ -3,6 +3,12 @@
     <div class="brands-name">
         <ul class="nav nav-pills nav-stacked">
             <?php
+                if(isset($_GET["brand_id"])) {
+                    $selected_brand = $_GET["brand_id"];
+                } else {
+                    $selected_brand = '';
+                }
+
                 $brands = query("SELECT * FROM brands");
 
                 confirm($brands);
@@ -14,7 +20,8 @@
 
                     $num_rows = get_num_rows($product_by_brand);
                 ?>
-                <li><a href="shop.php?brand_id=<?php echo htmlspecialchars($brand["id"]); ?>">
+                <li><a <?php if(!empty($selected_brand) && $selected_brand == $brand["id"]) { echo "style='color: orange'"; } ?>
+                       href="shop.php?brand_id=<?php echo htmlspecialchars($brand["id"]); ?>">
                         <span class="pull-right">(<?php echo $num_rows; ?>)</span><?php echo $brand["name"]; ?></a></li>
             <?php
                 endwhile;
